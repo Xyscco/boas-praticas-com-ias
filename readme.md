@@ -1,21 +1,10 @@
-# API RESTful de Produtos
+# Documentação da API de Gerenciamento de Produtos
 
-Esta API permite gerenciar produtos com operações de CRUD utilizando Node.js, Express e SQLite, totalmente criada para entender as boas praticas de desenvolvimento usando IAS com Copilot.
+## Descrição Geral
 
-## Como executar
+Esta API RESTful permite o gerenciamento de produtos, possibilitando operações de criação, consulta, atualização e remoção (CRUD). Desenvolvida em Node.js com Express e persistência em SQLite, a API é ideal para aplicações que necessitam de um controle simples e eficiente de produtos.
 
-1. Instale as dependências:
-   ```
-   npm install
-   ```
-
-2. Para desenvolvimento com live reload:
-   ```
-   npm run dev
-   ```
-
-3. Acesse a API em:  
-   `http://localhost:3000`
+Todas as respostas são em formato JSON e as requisições devem ser feitas utilizando o padrão REST.
 
 ---
 
@@ -23,113 +12,83 @@ Esta API permite gerenciar produtos com operações de CRUD utilizando Node.js, 
 
 ### 1. Criar Produto
 
-- **POST** `/produtos`
+- **URL:** `/produtos`
+- **Método:** `POST`
+- **Descrição:** Cria um novo produto.
 - **Body (JSON):**
   ```json
   {
-    "nome": "Camiseta",
-    "preco": 49.9,
-    "descricao": "Camiseta 100% algodão"
+    "nome": "Nome do produto",
+    "preco": 99.99,
+    "descricao": "Descrição do produto"
   }
   ```
-- **Resposta:**  
-  `201 Created`  
-  ```json
-  {
-    "id": 1,
-    "nome": "Camiseta",
-    "preco": 49.9,
-    "descricao": "Camiseta 100% algodão"
-  }
-  ```
+- **Respostas:**
+  - `201 Created`: Produto criado com sucesso.
+  - `400 Bad Request`: Dados inválidos.
 
 ---
 
 ### 2. Listar Todos os Produtos
 
-- **GET** `/produtos`
-- **Resposta:**  
-  `200 OK`  
-  ```json
-  [
-    {
-      "id": 1,
-      "nome": "Camiseta",
-      "preco": 49.9,
-      "descricao": "Camiseta 100% algodão"
-    }
-  ]
-  ```
+- **URL:** `/produtos`
+- **Método:** `GET`
+- **Descrição:** Retorna uma lista de todos os produtos cadastrados.
+- **Respostas:**
+  - `200 OK`: Lista de produtos.
 
 ---
 
 ### 3. Buscar Produto por ID
 
-- **GET** `/produtos/{id}`
-- **Resposta:**  
-  `200 OK`  
-  ```json
-  {
-    "id": 1,
-    "nome": "Camiseta",
-    "preco": 49.9,
-    "descricao": "Camiseta 100% algodão"
-  }
-  ```
-- **Erro:**  
-  `404 Not Found`  
-  ```json
-  { "erro": "Produto não encontrado" }
-  ```
+- **URL:** `/produtos/{id}`
+- **Método:** `GET`
+- **Descrição:** Retorna os dados de um produto específico pelo ID.
+- **Parâmetros de URL:**
+  - `id` (integer): ID do produto.
+- **Respostas:**
+  - `200 OK`: Produto encontrado.
+  - `404 Not Found`: Produto não encontrado.
 
 ---
 
 ### 4. Atualizar Produto
 
-- **PUT** `/produtos/{id}`
+- **URL:** `/produtos/{id}`
+- **Método:** `PUT`
+- **Descrição:** Atualiza os dados de um produto existente.
+- **Parâmetros de URL:**
+  - `id` (integer): ID do produto.
 - **Body (JSON):**
   ```json
   {
-    "nome": "Camiseta Polo",
-    "preco": 59.9,
-    "descricao": "Camiseta polo masculina"
+    "nome": "Novo nome",
+    "preco": 79.90,
+    "descricao": "Nova descrição"
   }
   ```
-- **Resposta:**  
-  `200 OK`  
-  ```json
-  {
-    "id": 1,
-    "nome": "Camiseta Polo",
-    "preco": 59.9,
-    "descricao": "Camiseta polo masculina"
-  }
-  ```
-- **Erro:**  
-  `404 Not Found`  
-  ```json
-  { "erro": "Produto não encontrado" }
-  ```
+- **Respostas:**
+  - `200 OK`: Produto atualizado.
+  - `400 Bad Request`: Dados inválidos.
+  - `404 Not Found`: Produto não encontrado.
 
 ---
 
 ### 5. Deletar Produto
 
-- **DELETE** `/produtos/{id}`
-- **Resposta:**  
-  `204 No Content`
-- **Erro:**  
-  `404 Not Found`  
-  ```json
-  { "erro": "Produto não encontrado" }
-  ```
+- **URL:** `/produtos/{id}`
+- **Método:** `DELETE`
+- **Descrição:** Remove um produto do sistema.
+- **Parâmetros de URL:**
+  - `id` (integer): ID do produto.
+- **Respostas:**
+  - `204 No Content`: Produto removido com sucesso.
+  - `404 Not Found`: Produto não encontrado.
 
 ---
 
-## Testando com Bruno ou outro client REST
+## Observações
 
-1. Crie uma requisição para cada endpoint conforme exemplos acima.
-2. Use o corpo JSON indicado para POST e PUT.
-3. Altere o `{id}` conforme necessário.
-
----
+- Todos os endpoints retornam respostas em JSON.
+- Os campos `nome` e `preco` são obrigatórios para criação e atualização.
+- Utilize um client REST (como Bruno, Insomnia ou Postman) para testar a
